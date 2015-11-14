@@ -33,13 +33,10 @@ void parse_input(const char * input)
     struct shell_token * token = NULL;
     size_t i_idx = 0;
     size_t b_idx = 0;
-    size_t n_tokens = 0;
-    int last_char = 0;
     bool quoted = false;
     enum quote_type quote_type;
 
     while ( input[i_idx] ) {
-        last_char = 0;
         b_idx = 0;
         token = NULL;
 
@@ -102,7 +99,6 @@ void parse_input(const char * input)
                 break;
             }
 
-            last_char = input[i_idx];
             buffer[b_idx++] = input[i_idx++];
         }
 

@@ -26,6 +26,7 @@ void token_list_destroy(TokenList list)
     for ( size_t i = 0; i < list->length; ++i ) {
         shell_token_destroy(list->tokens[i]);
     }
+    free(list->tokens);
     free(list);
 }
 

@@ -7,6 +7,10 @@
 #include "std_wrappers.h"
 #include "shell_token_list.h"
 
+/*  TODO: Modify to handle unbalanced quotation marks.
+ *  TODO: Modify to handle escape characters.
+ */
+
 enum quote_type {
     QUOTE_SINGLE,
     QUOTE_DOUBLE

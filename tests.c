@@ -3,24 +3,15 @@
 #include "shell_parser.h"
 #include "shell_token_list.h"
 #include "cmdline.h"
+#include "frontend.h"
 
 static void test_parse_input(void);
-static void test_cmdline(void);
 
 int main(void)
 {
-    test_parse_input();
-    //test_cmdline();
+    run_shell();
+    //test_parse_input();
     return 0;
-}
-
-static void test_cmdline(void)
-{
-    TokenList list = parse_input("cat this that | more and everything else");
-    CmdCmpList cml = cmdline_create(list);
-    token_list_destroy(list);
-    cmdline_print(cml);
-    cmdline_destroy(cml);
 }
 
 static void test_parse_input(void)

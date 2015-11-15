@@ -120,3 +120,13 @@ void command_component_print(struct command_component * cmp)
         }
 }
 
+bool cmdline_is_valid(CmdCmpList list)
+{
+    if ( list->length > 0 && list->components[0]->type == CT_COMMAND ) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+

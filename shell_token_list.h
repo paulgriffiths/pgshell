@@ -6,7 +6,7 @@
 
 typedef struct shell_token_list * TokenList;
 
-TokenList token_list_create();
+TokenList token_list_create(void);
 void token_list_destroy(TokenList list);
 size_t token_list_length(TokenList list);
 void token_list_add(TokenList list, struct shell_token * token);

@@ -12,7 +12,7 @@ struct shell_token_list {
     size_t capacity;
 };
 
-TokenList token_list_create()
+TokenList token_list_create(void)
 {
     struct shell_token_list * new_list = xmalloc(sizeof *new_list);
     new_list->capacity = INITIAL_LIST_SIZE;

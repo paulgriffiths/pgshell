@@ -2,6 +2,7 @@
 #define PG_SHELL_CMDLINE_H
 
 #include <stddef.h>
+#include <stdbool.h>
 #include "shell_token.h"
 #include "shell_token_list.h"
 #include "command.h"
@@ -30,6 +31,7 @@ struct command_component * cmdline_component_at_index(CmdCmpList list,
         const size_t index);
 void cmdline_print(CmdCmpList list);
 void command_component_print(struct command_component * cmp);
+bool cmdline_is_valid(CmdCmpList list);
 
 
 #endif      /*  PG_SHELL_CMDLINE_H  */

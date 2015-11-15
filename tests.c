@@ -2,13 +2,25 @@
 #include "shell_token.h"
 #include "shell_parser.h"
 #include "shell_token_list.h"
+#include "cmdline.h"
 
 static void test_parse_input(void);
+static void test_cmdline(void);
 
 int main(void)
 {
     test_parse_input();
+    //test_cmdline();
     return 0;
+}
+
+static void test_cmdline(void)
+{
+    TokenList list = parse_input("cat this that | more and everything else");
+    CmdCmpList cml = cmdline_create(list);
+    token_list_destroy(list);
+    cmdline_print(cml);
+    cmdline_destroy(cml);
 }
 
 static void test_parse_input(void)
@@ -25,13 +37,16 @@ static void test_parse_input(void)
         "cat this | more that",
         "cat this<more that 'no spaces'",
         "cat this <more that 'leading space'",
-        "cat this> more that 'trailing space'"
+        "cat this> more that 'trailing space'",
+        "cat this that|more and everything else"
     };
 
-    TokenList list;
     for ( size_t i = 0; i < sizeof(cmds) / sizeof(cmds[0]); ++i ) {
-        list = parse_input(cmds[i]);
-        token_list_print(list);
+        printf("--------------------\n");
+        TokenList list = parse_input(cmds[i]);
+        CmdCmpList cmds = cmdline_create(list);
         token_list_destroy(list);
+        cmdline_print(cmds);
+        cmdline_destroy(cmds);
     }
 }

@@ -23,6 +23,7 @@ struct shell_token {
 struct shell_token * string_token_create(const char * str);
 struct shell_token * operator_token_create(enum shell_operator_type type);
 void shell_token_destroy(struct shell_token * token);
+void operator_print(enum shell_operator_type type);
 
 
 #endif      /*  PG_SHELL_SHELL_TOKEN_H  */

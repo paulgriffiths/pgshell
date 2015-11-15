@@ -34,7 +34,7 @@ void command_add_argument(Command cmd, const char * arg)
 {
     if ( cmd->num_args + 2 >= cmd->capacity ) {
         cmd->capacity *= 2;
-        cmd->args = xrealloc(cmd->args, cmd->capacity);
+        cmd->args = xrealloc(cmd->args, cmd->capacity * sizeof *cmd->args);
     }
 
     cmd->args[cmd->num_args] = xstrdup(arg);
@@ -60,7 +60,8 @@ char * command_command(Command cmd)
 void command_print(Command cmd)
 {
     if ( cmd->num_args > 0 ) {
-        printf("Program: %s\n", cmd->args[0]);
+        printf("Program: %s (num_args %zu, capacity %zu)\n",
+                cmd->args[0], cmd->num_args, cmd->capacity);
     }
 
     for ( size_t i = 1; i < cmd->num_args; ++i ) {

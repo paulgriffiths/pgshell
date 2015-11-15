@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "shell_token.h"
 #include "shell_parser.h"
+#include "shell_token_list.h"
 
 static void test_parse_input(void);
 
@@ -12,16 +13,25 @@ int main(void)
 
 static void test_parse_input(void)
 {
-    parse_input("cat with three args");
-    parse_input("cat with args and trailing spaces     ");
-    parse_input("cat with two \"double quoted\" args");
-    parse_input("cat with two \"double quoted\" args \"two times\" over");
-    parse_input("cat with two 'single quoted' args");
-    parse_input("cat with two 'single quoted' args 'two times' over");
-    parse_input("cat with \"single quotes 'embedded in' double quotes\"");
-    parse_input("cat with 'double quotes \"embedded in\" single quotes'");
-    parse_input("cat this | more that");
-    parse_input("cat this<more that 'no spaces'");
-    parse_input("cat this <more that 'leading space'");
-    parse_input("cat this> more that 'trailing space'");
+    static char * cmds[] = {
+        "cat with three args",
+        "cat with args and trailing spaces     ",
+        "cat with two \"double quoted\" args",
+        "cat with two \"double quoted\" args \"two times\" over",
+        "cat with two 'single quoted' args",
+        "cat with two 'single quoted' args 'two times' over",
+        "cat with \"single quotes 'embedded in' double quotes\"",
+        "cat with 'double quotes \"embedded in\" single quotes'",
+        "cat this | more that",
+        "cat this<more that 'no spaces'",
+        "cat this <more that 'leading space'",
+        "cat this> more that 'trailing space'"
+    };
+
+    TokenList list;
+    for ( size_t i = 0; i < sizeof(cmds) / sizeof(cmds[0]); ++i ) {
+        list = parse_input(cmds[i]);
+        token_list_print(list);
+        token_list_destroy(list);
+    }
 }

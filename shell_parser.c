@@ -26,7 +26,7 @@ static bool is_operator(const char c)
     return false;
 }
 
-void parse_input(const char * input)
+TokenList parse_input(const char * input)
 {
     char * buffer = xmalloc(strlen(input) + 1);
     TokenList list = token_list_create();
@@ -112,7 +112,7 @@ void parse_input(const char * input)
         }
     }
 
-    token_list_print(list);
-    token_list_destroy(list);
     free(buffer);
+
+    return list;
 }

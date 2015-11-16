@@ -9,7 +9,7 @@
 void * wrapper_malloc(const size_t size, const char * file, const int line);
 void * wrapper_realloc(void * ptr, const size_t size,
                        const char * file, const int line);
-void * wrapper_strdup(const char * str, const char * file, const int line);
+char * wrapper_strdup(const char * str, const char * file, const int line);
 pid_t wrapper_fork(const char * file, const int line);
 
 #define xmalloc(size) wrapper_malloc((size), __FILE__, __LINE__)

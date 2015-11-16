@@ -37,8 +37,7 @@ void command_add_argument(Command cmd, const char * arg)
         cmd->args = xrealloc(cmd->args, cmd->capacity * sizeof *cmd->args);
     }
 
-    cmd->args[cmd->num_args] = xstrdup(arg);
-    ++cmd->num_args;
+    cmd->args[cmd->num_args++] = xstrdup(arg);
     cmd->args[cmd->num_args] = NULL;
 }
 

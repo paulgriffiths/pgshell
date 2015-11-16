@@ -4,11 +4,7 @@
 #include <string.h>
 #include "io.h"
 
-static void output_prompt(void)
-{
-    printf("shell$ ");
-    fflush(stdout);
-}
+static void output_prompt(void);
 
 bool get_input_line(char * buffer, const size_t size)
 {
@@ -28,3 +24,8 @@ bool get_input_line(char * buffer, const size_t size)
     return true;
 }
 
+static void output_prompt(void)
+{
+    printf("shell$ ");
+    fflush(stdout);
+}

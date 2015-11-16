@@ -31,7 +31,7 @@ void * wrapper_realloc(void * ptr, const size_t size,
     return allocation;
 }
 
-void * wrapper_strdup(const char * str, const char * file, const int line)
+char * wrapper_strdup(const char * str, const char * file, const int line)
 {
     char * new_str = wrapper_malloc(strlen(str) + 1, file, line);
     strcpy(new_str, str);

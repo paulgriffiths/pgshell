@@ -52,12 +52,13 @@ void run_shell(void)
 
 static int run_foreground_command(CmdCmpList list)
 {
-    pid_t pid = xfork();
+    const pid_t pid = xfork();
 
     if ( pid == 0 ) {
         Command cmd = cmdline_component_at_index(list, 0)->content.cmd;
         char ** args = command_raw_args(cmd);
         execvp(args[0], args);
+
         switch ( errno ) {
             case EACCES:
                 fprintf(stderr, "pgshell: %s: Permission denied\n", args[0]);
@@ -72,6 +73,8 @@ static int run_foreground_command(CmdCmpList list)
                 fprintf(stderr, "pgshell: other exec() error\n");
                 break;
         }
+
+        cmdline_destroy(list);
         exit(EXIT_FAILURE);
     }
 
@@ -79,4 +82,3 @@ static int run_foreground_command(CmdCmpList list)
     waitpid(pid, &status, 0);
     return status;
 }
-

@@ -1,6 +1,8 @@
 #ifndef PG_SHELL_COMMAND_H
 #define PG_SHELL_COMMAND_H
 
+#include <stddef.h>
+
 typedef struct shell_command * Command;
 
 Command command_create(void);

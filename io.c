@@ -26,6 +26,6 @@ bool get_input_line(char * buffer, const size_t size)
 
 static void output_prompt(void)
 {
-    printf("shell$ ");
+    printf("pgshell$ ");
     fflush(stdout);
 }

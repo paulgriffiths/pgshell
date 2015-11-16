@@ -51,6 +51,11 @@ char ** command_raw_args(Command cmd)
     return cmd->args;
 }
 
+char * command_argument_at_index(Command cmd, const size_t index)
+{
+    return cmd->args[index];
+}
+
 char * command_command(Command cmd)
 {
     return cmd->args[0];

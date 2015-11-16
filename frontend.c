@@ -14,6 +14,7 @@
 #include "command.h"
 #include "shell_parser.h"
 #include "std_wrappers.h"
+#include "builtin.h"
 
 #define BUFFER_SIZE 1024
 
@@ -52,33 +53,39 @@ void run_shell(void)
 
 static int run_foreground_command(CmdCmpList list)
 {
-    const pid_t pid = xfork();
+    Command cmd = cmdline_component_at_index(list, 0)->content.cmd;
+    
+    if ( !execute_builtin(cmd) ) {
+        const pid_t pid = xfork();
 
-    if ( pid == 0 ) {
-        Command cmd = cmdline_component_at_index(list, 0)->content.cmd;
-        char ** args = command_raw_args(cmd);
-        execvp(args[0], args);
+        if ( pid == 0 ) {
+            char ** args = command_raw_args(cmd);
+            execvp(args[0], args);
 
-        switch ( errno ) {
-            case EACCES:
-                fprintf(stderr, "pgshell: %s: Permission denied\n", args[0]);
-                break;
+            switch ( errno ) {
+                case EACCES:
+                    fprintf(stderr, "pgshell: %s: Permission denied\n",
+                            args[0]);
+                    break;
 
-            case ENOENT:
-                fprintf(stderr, "pgshell: %s: No such file or directory\n",
-                        args[0]);
-                break;
+                case ENOENT:
+                    fprintf(stderr, "pgshell: %s: No such file or directory\n",
+                            args[0]);
+                    break;
 
-            default:
-                fprintf(stderr, "pgshell: other exec() error\n");
-                break;
+                default:
+                    fprintf(stderr, "pgshell: other exec() error\n");
+                    break;
+            }
+
+            cmdline_destroy(list);
+            exit(EXIT_FAILURE);
         }
 
-        cmdline_destroy(list);
-        exit(EXIT_FAILURE);
+        int status;
+        waitpid(pid, &status, 0);
+        return status;
     }
 
-    int status;
-    waitpid(pid, &status, 0);
-    return status;
+    return 0;
 }

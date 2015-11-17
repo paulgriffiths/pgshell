@@ -27,6 +27,7 @@ void builtin_cd(Command cmd)
         while ( (p = getpwent()) ) {
             if ( p->pw_uid == u ) {
                 path = xstrdup(p->pw_dir);
+                break;
             }
         }
 
